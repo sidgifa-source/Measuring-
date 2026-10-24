@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>تطبيق الخرائط</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1976d2" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- شريط الأدوات -->
+  <div id="toolbar">
+    <button id="btnCenter" title="تمركز على موقعي">🎯</button>
+    <button id="btnMeasureDist" title="قياس مسافة (يدوي/مشي)">📏 مسافة</button>
+    <button id="btnMeasureArea" title="قياس مساحة (يدوي/مشي)">📐 مساحة</button>
+    <button id="btnStop" title="إيقاف القياس" disabled>⏹ إيقاف</button>
+    <button id="btnSave" title="حفظ المشروع">💾</button>
+    <button id="btnLoad" title="تحميل مشروع">📂</button>
+  </div>
+
+  <!-- لوحة المعلومات -->
+  <div id="infoPanel">
+    <div id="status">جاهز</div>
+    <div id="result"></div>
+  </div>
+
+  <!-- نافذة المشاريع المحفوظة -->
+  <div id="projectsModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>المشاريع المحفوظة</h3>
+      <ul id="projectsList"></ul>
+      <button id="closeModal">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    // تسجيل Service Worker للعمل Offline
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(r => console.log('SW مسجل:', r.scope))
+          .catch(err => console.error('فشل تسجيل SW:', err));
+      });
+    }
+  </script>
+</body>
+</html>
